@@ -267,7 +267,7 @@ func (acc *Account) accountRead(n int) {
 
 	acc.stats.Bytes(int64(n))
 
-	limitBandwidth(n)
+	TokenBucket.LimitBandwidth(TokenBucketSlotAccounting, n)
 }
 
 // read bytes from the io.Reader passed in and account them

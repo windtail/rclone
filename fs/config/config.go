@@ -229,10 +229,10 @@ func LoadConfig() {
 	}
 
 	// Start the token bucket limiter
-	accounting.StartTokenBucket()
+	accounting.TokenBucket.Start()
 
 	// Start the bandwidth update ticker
-	accounting.StartTokenTicker()
+	accounting.TokenBucket.StartTokenTicker()
 
 	// Start the transactions per second limiter
 	fshttp.StartHTTPTokenBucket()
