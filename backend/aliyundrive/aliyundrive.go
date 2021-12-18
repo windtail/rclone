@@ -96,6 +96,7 @@ func (f *Fs) shouldRetry(ctx context.Context, err error) (bool, error) {
 		return true, err
 	}
 	if strings.Contains(err.Error(), `429 Too Many Requests`) {
+		fs.Infof(f, "%v", err)
 		return true, err
 	}
 	return false, err
@@ -141,7 +142,8 @@ func (f *Fs) FindLeaf(ctx context.Context, pathID, leaf string) (pathIDOut strin
 func (f *Fs) CreateDir(ctx context.Context, pathID, leaf string) (newID string, err error) {
 	leaf = f.opt.Enc.FromStandardName(leaf)
 	err = f.pacer.Call(func() (bool, error) {
-		newID, err = f.srv.CreateFolder(ctx, pathID, leaf)
+		node := drive.Node{ParentId: pathID, Name: leaf}
+		newID, err = f.srv.CreateFolder(ctx, node)
 		return f.shouldRetry(ctx, err)
 	})
 	if err != nil {
@@ -608,7 +610,8 @@ func (o *Object) Update(ctx context.Context, in io.Reader, src fs.ObjectInfo, op
 
 	var nodeId string
 	err = o.fs.pacer.Call(func() (bool, error) {
-		nodeId, err = o.fs.srv.CreateFileWithProof(ctx, directoryId, leaf, src.Size(), in, sha1Code, proofCode)
+		node := drive.Node{ParentId: directoryId, Name: leaf, Size: src.Size()}
+		nodeId, err = o.fs.srv.CreateFileWithProof(ctx, node, in, sha1Code, proofCode)
 		return o.fs.shouldRetry(ctx, err)
 	})
 	if err != nil {
