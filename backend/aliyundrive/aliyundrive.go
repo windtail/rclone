@@ -486,6 +486,21 @@ func (f *Fs) Purge(ctx context.Context, dir string) error {
 	return f.Rmdir(ctx, dir)
 }
 
+// About gets quota information from the Fs
+func (f *Fs) About(ctx context.Context) (usage *fs.Usage, err error) {
+	info, err := f.srv.About(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	usage = &fs.Usage{
+		Used:  fs.NewUsageValue(info.Used),
+		Total: fs.NewUsageValue(info.Total),
+		Free:  fs.NewUsageValue(info.Total - info.Used),
+	}
+	return usage, nil
+}
+
 // String returns a description of the Object
 func (o *Object) String() string {
 	if o == nil {
@@ -627,5 +642,6 @@ var (
 	_ fs.Mover    = (*Fs)(nil)
 	_ fs.DirMover = (*Fs)(nil)
 	_ fs.Purger   = (*Fs)(nil)
+	_ fs.Abouter  = (*Fs)(nil)
 	_ fs.Object   = (*Object)(nil)
 )
