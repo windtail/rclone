@@ -120,6 +120,10 @@ func NewFs(ctx context.Context, name, root string, m configmap.Mapper) (fs.Fs, e
 
 // FindLeaf finds a directory of name leaf in the folder with ID pathID
 func (f *Fs) FindLeaf(ctx context.Context, pathID, leaf string) (pathIDOut string, found bool, err error) {
+	if leaf == "" {
+		return pathID, true, nil
+	}
+	
 	var nodes []drive.Node
 	err = f.pacer.Call(func() (bool, error) {
 		nodes, err = f.srv.List(ctx, pathID)
