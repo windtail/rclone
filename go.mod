@@ -8,7 +8,7 @@ require (
 	github.com/Azure/azure-storage-blob-go v0.14.0
 	github.com/Azure/go-autorest/autorest/adal v0.9.18
 	github.com/Azure/go-ntlmssp v0.0.0-20211209120228-48547f28849e
-	github.com/K265/aliyundrive-go v0.0.0-20211201005026-f2a762c8f2fb
+	github.com/K265/aliyundrive-go v0.0.0-20211218103215-c3eba4e292d5
 	github.com/Max-Sum/base32768 v0.0.0-20191205131208-7937843c71d5
 	github.com/Unknwon/goconfig v1.0.0
 	github.com/a8m/tree v0.0.0-20210414114729-ce3525c5c2ef
