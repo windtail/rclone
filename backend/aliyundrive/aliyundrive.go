@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"path"
-	"path/filepath"
 	"strings"
 	"time"
 
@@ -123,7 +122,7 @@ func (f *Fs) FindLeaf(ctx context.Context, pathID, leaf string) (pathIDOut strin
 	if leaf == "" {
 		return pathID, true, nil
 	}
-	
+
 	var nodes []drive.Node
 	err = f.pacer.Call(func() (bool, error) {
 		nodes, err = f.srv.List(ctx, pathID)
@@ -199,8 +198,7 @@ func newFs(ctx context.Context, name, root string, m configmap.Mapper) (*Fs, err
 	node, err := f.srv.GetByPath(ctx, f.root, drive.AnyKind)
 	if err == nil && !node.IsDirectory() {
 		// It is a file, so use the parent as the root
-		f.root = filepath.Dir(f.root)
-		// return an error with an fs which points to the parent
+		f.root = path.Dir(f.root)
 		return f, fs.ErrorIsFile
 	}
 
