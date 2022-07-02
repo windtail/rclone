@@ -3,6 +3,7 @@ package aliyundrive
 import (
 	"context"
 	"fmt"
+	liberrors "github.com/rclone/rclone/lib/errors"
 	"io"
 	"os"
 	"path"
@@ -27,6 +28,17 @@ const (
 	maxFileNameLength = 1024
 	defaultMinSleep   = fs.Duration(10 * time.Millisecond)
 )
+
+// retryErrorCodes is a slice of error codes that we will retry
+var retryErrorCodes = []int{
+	423, // Locked
+	429, // Too Many Requests.
+	500, // Internal Server Error
+	502, // Bad Gateway
+	503, // Service Unavailable
+	504, // Gateway Timeout
+	509, // Bandwidth Limit Exceeded
+}
 
 // Register with Fs
 func init() {
@@ -94,11 +106,30 @@ func (f *Fs) shouldRetry(ctx context.Context, err error) (bool, error) {
 	if fserrors.ShouldRetry(err) {
 		return true, err
 	}
-	if strings.Contains(err.Error(), `429 Too Many Requests`) {
-		fs.Infof(f, "%v", err)
+	if f.shouldRetryHTTP(err) {
+		fs.Infof(f, "http status error retry: %v", err)
 		return true, err
 	}
 	return false, err
+}
+
+// shouldRetryHTTP determines whether a given http err rates being retried
+func (f *Fs) shouldRetryHTTP(err error) (shouldRetry bool) {
+	liberrors.Walk(err, func(err error) bool {
+		httpStatusError, ok := err.(drive.HTTPStatusError)
+		if ok {
+			statusCode := httpStatusError.StatusCode()
+			for _, code := range retryErrorCodes {
+				if statusCode == code {
+					shouldRetry = true
+					return true
+				}
+			}
+		}
+		
+		return false
+	})
+	return
 }
 
 // NewFs constructs an Fs from the path, bucket:path
