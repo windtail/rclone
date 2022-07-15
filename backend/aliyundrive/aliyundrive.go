@@ -126,7 +126,7 @@ func (f *Fs) shouldRetryHTTP(err error) (shouldRetry bool) {
 				}
 			}
 		}
-		
+
 		return false
 	})
 	return
@@ -154,11 +154,7 @@ func (f *Fs) FindLeaf(ctx context.Context, pathID, leaf string) (pathIDOut strin
 		return pathID, true, nil
 	}
 
-	var nodes []drive.Node
-	err = f.pacer.Call(func() (bool, error) {
-		nodes, err = f.srv.List(ctx, pathID)
-		return f.shouldRetry(ctx, err)
-	})
+	nodes, err := f.listAll(ctx, pathID)
 	if err != nil {
 		return "", false, err
 	}
@@ -271,6 +267,26 @@ func getNodeModTime(node *drive.Node) time.Time {
 	return t
 }
 
+func (f *Fs) listAll(ctx context.Context, nodeId string) ([]drive.Node, error) {
+	p := f.srv.List(nodeId)
+	var nodes []drive.Node
+	for p.Next() {
+		err := f.pacer.Call(func() (bool, error) {
+			data, err := p.Nodes(ctx)
+			if err == nil {
+				nodes = append(nodes, data...)
+			}
+
+			return f.shouldRetry(ctx, err)
+		})
+
+		if err != nil {
+			return nil, err
+		}
+	}
+	return nodes, nil
+}
+
 // List the objects and directories in dir into entries.  The
 // entries can be returned in any order but should be for a
 // complete directory.
@@ -286,11 +302,7 @@ func (f *Fs) List(ctx context.Context, dir string) (entries fs.DirEntries, err e
 		return nil, err
 	}
 
-	var nodes []drive.Node
-	err = f.pacer.Call(func() (bool, error) {
-		nodes, err = f.srv.List(ctx, directoryId)
-		return f.shouldRetry(ctx, err)
-	})
+	nodes, err := f.listAll(ctx, directoryId)
 	if err != nil {
 		return nil, err
 	}
@@ -323,11 +335,7 @@ func (f *Fs) NewObject(ctx context.Context, remote string) (fs.Object, error) {
 		return nil, fs.ErrorObjectNotFound
 	}
 
-	var nodes []drive.Node
-	err = f.pacer.Call(func() (bool, error) {
-		nodes, err = f.srv.List(ctx, directoryId)
-		return f.shouldRetry(ctx, err)
-	})
+	nodes, err := f.listAll(ctx, directoryId)
 	if err != nil {
 		return nil, err
 	}
