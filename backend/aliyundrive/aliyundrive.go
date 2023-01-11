@@ -226,6 +226,10 @@ func newFs(ctx context.Context, name, root string, m configmap.Mapper) (*Fs, err
 	if err == nil && !node.IsDirectory() {
 		// It is a file, so use the parent as the root
 		f.root = path.Dir(f.root)
+		if f.root == "." {
+			f.root = "/"
+		}
+
 		return f, fs.ErrorIsFile
 	}
 
