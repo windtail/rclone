@@ -8,6 +8,7 @@ require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.2.0
 	github.com/Azure/azure-sdk-for-go/sdk/storage/azblob v0.5.1
 	github.com/Azure/go-ntlmssp v0.0.0-20220621081337-cb9428e4ac1e
+	github.com/K265/aliyundrive-go v0.0.0-20221030110340-e9f0d520f254
 	github.com/Max-Sum/base32768 v0.0.0-20191205131208-7937843c71d5
 	github.com/Unknwon/goconfig v1.0.0
 	github.com/a8m/tree v0.0.0-20210414114729-ce3525c5c2ef
@@ -113,6 +114,7 @@ require (
 	github.com/onsi/gomega v1.13.0 // indirect
 	github.com/pengsrc/go-shared v0.2.1-0.20190131101655-1999055a4a14 // indirect
 	github.com/pkg/browser v0.0.0-20210115035449-ce105d075bb4 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect

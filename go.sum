@@ -302,8 +302,8 @@ github.com/AzureAD/microsoft-authentication-library-for-go v0.7.0/go.mod h1:BDJ5
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/Julusian/godocdown v0.0.0-20170816220326-6d19f8ff2df8/go.mod h1:INZr5t32rG59/5xeltqoCJoNY7e5x/3xoY9WSWVWg74=
-github.com/K265/aliyundrive-go v0.0.0-20220715114732-a1c8df963584 h1:tfmWWieiDo2xQpPQcta3T6AMeBrUEryrXMgL/yNgFpU=
-github.com/K265/aliyundrive-go v0.0.0-20220715114732-a1c8df963584/go.mod h1:gSEZmEJhd+Qf03U/HVdAD+DfKmNMxxkPL6LQqzEojMM=
+github.com/K265/aliyundrive-go v0.0.0-20221030110340-e9f0d520f254 h1:iG9cbbaNCbeLY7ByBFDB8b/p93lxxddUIBL3RmP8iUI=
+github.com/K265/aliyundrive-go v0.0.0-20221030110340-e9f0d520f254/go.mod h1:gSEZmEJhd+Qf03U/HVdAD+DfKmNMxxkPL6LQqzEojMM=
 github.com/Max-Sum/base32768 v0.0.0-20191205131208-7937843c71d5 h1:w/vNc+SQRYKGWBHeDrzvvNttHwZEbSAP0kmTdORl4OI=
 github.com/Max-Sum/base32768 v0.0.0-20191205131208-7937843c71d5/go.mod h1:C8yoIfvESpM3GD07OCHU7fqI7lhwyZ2Td1rbNbTAhnc=
 github.com/Microsoft/go-winio v0.5.2 h1:a9IhgEQBCUEk6QCdml9CiJGhAws+YwffDHEMp1VMrpA=
@@ -727,6 +727,7 @@ github.com/pkg/browser v0.0.0-20210115035449-ce105d075bb4/go.mod h1:N6UoU20jOqgg
 github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e/go.mod h1:pJLUxLENpZxwdsKMEsNbx1VGcRFpLqf3715MtcvvzbA=
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/sftp v1.13.5 h1:a3RLUqkyjYRtBTZJZ1VRrKbN3zhuPLlUc3sphVz81go=
 github.com/pkg/sftp v1.13.5/go.mod h1:wHDZ0IZX6JcBYRK1TH9bcVq8G7TLpVHYIGJRFnmPfxg=

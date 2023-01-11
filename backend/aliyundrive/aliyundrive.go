@@ -638,7 +638,7 @@ func (o *Object) Update(ctx context.Context, in io.Reader, src fs.ObjectInfo, op
 		fd, err := os.Open(localPath)
 		if err == nil {
 			_, sha1Code, _ = drive.CalcSha1(fd)
-			_, proofCode, _ = o.fs.srv.CalcProof(fileSize, fd)
+			proofCode, _ = o.fs.srv.CalcProof(fileSize, fd)
 			_ = fd.Close()
 		}
 	}
